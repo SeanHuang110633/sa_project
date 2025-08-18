@@ -71,7 +71,6 @@ public class DatingApp {
                             Member chosenMember = chooseMember(scanner, specificMembers);
                             if(chosenMember == null) {
                                 // not willing to invite
-                                System.out.println("👍 Goodbye!");
                                 System.exit(0);
                             }
 
