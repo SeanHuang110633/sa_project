@@ -22,7 +22,7 @@ public class Member {
         this.region = region;
         this.sentInvitations = new ArrayList<>();
         this.receivedInvitations = new ArrayList<>();
-        this.dailyInvitationCount = 10;
+        this.dailyInvitationCount = 0;
         this.lastInvitationDate = LocalDate.now();
     }
 
