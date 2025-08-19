@@ -6,8 +6,8 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class InvitationManager {
-
-    private final int MAX_INVITATIONS = 10;
+    // daily invitation limit
+    private static final int MAX_INVITATIONS = 10;
     private ArrayList<Member> memberData;
     private ArrayList<Invitation> invitationRecords;
 
@@ -16,16 +16,19 @@ public class InvitationManager {
         this.invitationRecords = new ArrayList<>();
     }
 
-    // region public methods
+    // region public methods : for external usage
+
     // 1. get the members that match the criteria
     public ArrayList<Member> getSpecificMemberData(HashMap<String, String> criteria) {
-        // validateCriteria
+        // validateCriteria (private method below)
         if(!validateCriteria(criteria)) return null;
 
+        // get parameters
         int maxAge = Integer.parseInt(criteria.get("maxAge"));
         String gender = criteria.get("gender");
         String region = criteria.get("region");
 
+        // filter to get specific members
         Stream<Member> memberStream = this.memberData.stream();
         ArrayList<Member> specificMemberData = memberStream
                 .filter(member -> member.getAge() <= maxAge)
@@ -34,7 +37,6 @@ public class InvitationManager {
                 .collect(Collectors.toCollection(ArrayList::new));
         return specificMemberData;
     }
-
 
     // 2. send invitation
     public boolean sendInvitation(Member sender, Member receiver) {
@@ -73,18 +75,22 @@ public class InvitationManager {
     // endregion
 
 
-    // region private methods
+    // region private methods : just for internal usage
+
     // 1. validate criteria
     private boolean validateCriteria(HashMap<String, String> criteria) {
         int maxAge = Integer.parseInt(criteria.get("maxAge"));
         String gender = criteria.get("gender");
         String region = criteria.get("region");
-        if(maxAge < 0 ){
+        // maxAge: 0-100
+        if(maxAge < 0 || maxAge > 100){
             return false;
         }
+        // gender should not be empty and can only be F/M/Other
         if(gender.isEmpty() || !gender.equals("F") && !gender.equals("M") && !gender.equals("Other")){
             return false;
         }
+        // region should not be empty and can only be Taipei/Kaohsing
         if(region.isEmpty() ||!region.equals("Taipei") && !region.equals("Kaohsing")){
             return false;
         }
@@ -103,5 +109,4 @@ public class InvitationManager {
         return invitation;
     }
     // endregion
-
 }

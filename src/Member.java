@@ -26,20 +26,28 @@ public class Member {
         this.lastInvitationDate = LocalDate.now();
     }
 
+    // add invitation to member if the member has sent invitation to someone
     public void addSentInvitations(Invitation invitation) {
         this.sentInvitations.add(invitation);
     }
 
+    // add invitation to member if the member has received invitation
     public void addReceivedInvitations(Invitation invitation) {
         this.receivedInvitations.add(invitation);
     }
 
+    /* handle daily invitation count
+     * if the condition is renew , set the daily invitation count to 0
+     * if the condition is add , add 1 to the daily invitation count
+     * else print wrong condition
+     * */
     public void handleDailyInvitationCount(String condition) {
         if(condition.equals("RENEW")) this.dailyInvitationCount = 0;
         else if(condition.equals("ADD")) this.dailyInvitationCount++;
         else System.out.println(" Wrong condition ");
     }
 
+    // handle last invitation date
     public void handleLastInvitationDate(LocalDate date) {
         this.lastInvitationDate = date;
     }
