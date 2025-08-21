@@ -87,23 +87,35 @@ public class Member {
 
 
     // ------------------ just for testing ----------------------
-    public void printInvitations() {
-        System.out.println("[Sent Invitations] ");
-        if(this.sentInvitations.isEmpty()) System.out.println("Empty");
-        this.sentInvitations.forEach(invitation -> System.out.println(
-                "{ - id : " + invitation.getId() +
-                " - Receiver : " + invitation.getReceiver().getName()+
-                " - Status : " + invitation.getStatus() +
-                "  }"
-        ));
-        System.out.println("[Received Invitations]  ");
-        if(this.receivedInvitations.isEmpty()) System.out.println("Empty");
-        this.receivedInvitations.forEach(invitation -> System.out.println(
-                "{ - id : " + invitation.getId() +
-                " - Sender : " + invitation.getSender().getName()+
-                " - Status : " + invitation.getStatus() +
-                "  }"
-        ));
+    public String getInvitationsSummary() {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("[Sent Invitations] : \n");
+        if (this.sentInvitations.isEmpty()) {
+            sb.append("Empty\n");
+        } else {
+            this.sentInvitations.forEach(invitation -> sb.append(String.format(
+                    "{ - id : %s - Receiver : %s - Status : %s }\n",
+                    invitation.getId(),
+                    invitation.getReceiver().getName(),
+                    invitation.getStatus()
+            )));
+        }
+
+        sb.append("[Received Invitations] : \n");
+        if (this.receivedInvitations.isEmpty()) {
+            sb.append("Empty\n");
+        } else {
+            this.receivedInvitations.forEach(invitation -> sb.append(String.format(
+                    "{ - id : %s - Sender : %s - Status : %s }\n",
+                    invitation.getId(),
+                    invitation.getSender().getName(),
+                    invitation.getStatus()
+            )));
+        }
+
+        return sb.toString();
     }
+
 
 }
