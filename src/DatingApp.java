@@ -1,9 +1,6 @@
 import javax.swing.*;
-// 在容器四周加「留白」邊界，讓畫面不會太擁擠
 import javax.swing.border.EmptyBorder;
-// JTable 的資料模型（行列資料、是否可編輯等）
 import javax.swing.table.DefaultTableModel;
-// Abstract Window Toolkit 底層 GUI 相關類別，Swing 版面配置器大多在這包。
 import java.awt.*;
 import java.util.*;
 import java.util.List;
@@ -69,7 +66,7 @@ public class DatingApp {
             app.launchUI();
         });
     }
-    
+
     // region => GUI
     // =========================== GUI ==========================
     // 1. main UI
@@ -124,11 +121,11 @@ public class DatingApp {
         btnSearch = new JButton("Search");
 
         int col = 0;
-        // 第一列、第一欄（gridy=0, gridx=0）放Maximum age (0-100)標籤
+        // 第一列、第一欄（gridy=0, gridx=0）放maxAge (0-100)標籤
         gc.gridy = 0;
         gc.gridx = col++;
         criteria.add(new JLabel("Maximum age (0-100):"), gc);
-        // 第一列、第二欄（gridy=0, gridx=1）放 tfMaxAge。
+        // 第一列、第二欄（gridy=0, gridx=1）放 maxAge。
         gc.gridx = col;
         gc.weightx = 1;
         criteria.add(maxAge, gc);
@@ -139,10 +136,11 @@ public class DatingApp {
         col = 0;
         gc.gridx = col++;
         criteria.add(new JLabel("Gender:"), gc);
-        // 第二列、第二欄（gridy=1, gridx=1）放 tfMaxAge。
+        // 第二列、第二欄（gridy=1, gridx=1）放 Gender。
         gc.gridx = col;
         criteria.add(gender, gc);
 
+        // 同上
         gc.gridy = 2;
         col = 0;
         gc.gridx = col++;
@@ -150,11 +148,11 @@ public class DatingApp {
         gc.gridx = col;
         criteria.add(region, gc);
 
-        // 搜尋按鈕放在第 0 列第 3 欄
-        gc.gridy = 0;
-        gc.gridx = 3;
-        gc.gridheight = 3; // 縱向跨 3 列（0,1,2）
-        gc.fill = GridBagConstraints.BOTH; // 在儲存格中橫向與直向都填滿
+        // 搜尋按鈕
+        gc.gridy = 0; // 從第0列開始
+        gc.gridx = 3; // 放在第3欄
+        gc.gridheight = 3;  // 佔3列
+        gc.fill = GridBagConstraints.BOTH;
         criteria.add(btnSearch, gc);
 
         /** 搜尋結果 Table
@@ -164,7 +162,7 @@ public class DatingApp {
         tableModel = new DefaultTableModel(new Object[]{"ID", "Name", "Age", "Gender", "Region"}, 0) {
             @Override public boolean isCellEditable(int row, int column) { return false; }
         };
-        // 建立 JTable，資料來源綁到 tableModel。表格內容之後透過 tableModel.addRow() 來更新 (在下面的refreshTable方法)。
+
         table = new JTable(tableModel);
         table.setRowHeight(22);
         table.setFillsViewportHeight(true);
@@ -198,8 +196,8 @@ public class DatingApp {
         btnInvite.addActionListener(e -> doInvite());
         btnCancelExit.addActionListener(e -> System.exit(0));
 
-        btnInvite.setEnabled(false); // 讓按鈕一開始是無法點擊的（灰色狀態），避免用戶在還沒搜尋或選擇之前就亂點。
-        btnCancelExit.setEnabled(false); // 同理
+        btnInvite.setEnabled(false);
+        btnCancelExit.setEnabled(false);
         return footer;
     }
 
@@ -209,7 +207,6 @@ public class DatingApp {
         gender.setEnabled(enabled);
         region.setEnabled(enabled);
         btnSearch.setEnabled(enabled);
-        // 只有在 enabled == true 且 tableModel 裡有至少一筆資料時，「邀請」按鈕才可用。
         btnInvite.setEnabled(enabled && tableModel.getRowCount() > 0);
     }
     // endregion
@@ -273,7 +270,7 @@ public class DatingApp {
         }
     }
 
-    // endregion
+    // endregion (
 
     // region => functions which irrelevant to the main use case
     // 1. fetch mock data
